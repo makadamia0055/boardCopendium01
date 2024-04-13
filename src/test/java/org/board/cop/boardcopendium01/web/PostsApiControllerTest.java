@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -63,7 +64,7 @@ class PostsApiControllerTest {
     }
 
     @Test
-    public void Posts_수정된다() throws Exception{
+    public void Posts_수정및조회된다() throws Exception{
         //given
         Posts savedPosts = postsRepository.save(
                 Posts.builder().title("title1")
@@ -92,5 +93,26 @@ class PostsApiControllerTest {
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
+    }
+
+    @Test
+    public void Posts삭제된다(){
+        //given
+        Posts savedPost = postsRepository.save(
+                Posts.builder().title("title")
+                        .content("content")
+                        .author("author")
+                        .build()
+        );
+        Long savedPostId = savedPost.getId();
+        String url = "http://localhost:" + port + "/api/v1/posts/" + savedPostId;
+
+
+
+        //when
+        restTemplate.delete(url);
+        //then
+        Optional<Posts> byId = postsRepository.findById(savedPostId);
+        assertThat(byId.isPresent()).isFalse();
     }
 }

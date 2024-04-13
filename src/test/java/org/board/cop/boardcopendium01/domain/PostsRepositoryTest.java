@@ -1,10 +1,13 @@
 package org.board.cop.boardcopendium01.domain;
 
+import org.hibernate.boot.jaxb.internal.stax.LocalSchemaLocator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
